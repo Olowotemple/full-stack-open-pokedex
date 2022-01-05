@@ -38,4 +38,3 @@ jobs:
           heroku_email: 'olowotemple@yahoo.com'
           healthcheck: 'https://damp-shelf-71970.herokuapp.com/health'
           checkstring: 'ok'
-          rollbackonhealthcheckfailed: true
