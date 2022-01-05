@@ -1,1 +1,1 @@
-web: yarn eslint
+web: yarn start-prod
