@@ -3,7 +3,7 @@ name: Deployment Pipeline
 on:
   push:
     branches: [master]
-    
+
 jobs:
   simple_deployemnt_pipeline:
     runs-on: ubuntu-latest
@@ -27,7 +27,12 @@ jobs:
       - name: e2e tests
         uses: cypress-io/github-action@v2
         with:
-         command: yarn test:e2e
-         start: yarn start-prod
-         wait-on: http://localhost:5000
-      
+          command: yarn test:e2e
+          start: yarn start-prod
+          wait-on: http://localhost:5000
+      - name: deploy to heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: 'damp-shelf-71970'
+          heroku_email: 'olowotemple@yahoo.com'
