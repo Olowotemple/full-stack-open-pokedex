@@ -10,8 +10,18 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
+
+      - name: commit messages
+        env:
+          COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
+        run: echo "$COMMIT_MESSAGES"
+
+      - name: call join() on commit messages
+        run: echo "${{ join(github.event.commits.*.message, ' ') }}"
+
       - name: does commit message contain skip?
         run: echo "${{ contains(join(github.event.commits.*.message, ' '), 'skip') }}"
+
       - name: only do this step if commit message does not contain skip
         if: |
           github.event.name == 'push' &&
