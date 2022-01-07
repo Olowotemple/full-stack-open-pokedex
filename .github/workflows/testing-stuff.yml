@@ -24,6 +24,8 @@ jobs:
         run: echo "$COMMIT_MESSAGES"
       - name: call join() on commit messages
         run: echo "${{ join(github.event.commits.*.message, ' ') }}"
+      - name: does commit message contain skip?
+        run: echo "${{ contains(join(github.event.commits.*.message, ' '), 'skip') }}"
 
       # - name: does commit message contain skip?
       #   run: echo ${{contains(github.event.commits.*.message.join(' '), 'skip')}}
