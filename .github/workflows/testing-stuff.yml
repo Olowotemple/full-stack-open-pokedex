@@ -10,22 +10,13 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - name: gihub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-      - name: commits
-        env:
-          COMMITS: ${{ toJson(github.event.commits) }}
-        run: echo "$COMMITS"
-      - name: commit messages
-        env:
-          COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
-        run: echo "$COMMIT_MESSAGES"
-      - name: call join() on commit messages
-        run: echo "${{ join(github.event.commits.*.message, ' ') }}"
       - name: does commit message contain skip?
         run: echo "${{ contains(join(github.event.commits.*.message, ' '), 'skip') }}"
+      - name: only do this step if commit message does not contain skip
+        if: |
+          github.event.name == 'push' &&
+          !contains(join(github.event.commits.*.message, ' '), 'skip')
+        run: echo "Event name - push \n\n Commit message does not contain skip"
 
       # - name: does commit message contain skip?
       #   run: echo ${{contains(github.event.commits.*.message.join(' '), 'skip')}}
