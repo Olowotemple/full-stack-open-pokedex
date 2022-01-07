@@ -24,3 +24,8 @@ jobs:
         run: echo "$COMMIT_MESSAGES"
       - name: does commit message contain skip?
         run: echo ${{contains(github.event.commits.*.message.join(' '), 'skip')}}
+#         if: |
+#           github.event_name == 'push' &&
+#           !contains(github.event.commits.*.message.join(' '), 'skip')
+
+# if: ${{!contains(github.event.commits.*.message.join(' '), 'skip')}}
