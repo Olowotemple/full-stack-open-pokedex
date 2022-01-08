@@ -9,31 +9,13 @@ jobs:
   a_test_job:
     runs-on: ubuntu-18.04
     steps:
-      - name: Say testing stuff
-        run: echo "Testing stuff"
-      # - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-      # - name: commit messages
-      #   env:
-      #     COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
-      #   run: echo "$COMMIT_MESSAGES"
+      - name: Event name
+        run: echo "${{ github.event.name }}"
 
-      # - name: call join() on commit messages
-      #   run: echo "${{ join(github.event.commits.*.message, ' ') }}"
+      - name: Commit message
+        run: echo "${{ join(github.event.commits.*.message, ' ') }}"
 
-      # - name: does commit message contain skip?
-      #   run: echo "${{ contains(join(github.event.commits.*.message, ' '), 'skip') }}"
-
-      # - name: only do this step if commit message does not contain skip
-      #   if: |
-      #     github.event.name == 'push' &&
-      #     !contains(join(github.event.commits.*.message, ' '), 'skip')
-      #   run: echo "Event name - push \n\n Commit message does not contain skip"
-
-      # - name: does commit message contain skip?
-      #   run: echo ${{contains(github.event.commits.*.message.join(' '), 'skip')}}
-#         if: |
-#           github.event_name == 'push' &&
-#           !contains(github.event.commits.*.message.join(' '), 'skip')
-
-# if: ${{!contains(github.event.commits.*.message.join(' '), 'skip')}}
+      - name: 'does commit message contain #skip?'
+        run: echo "${{ contains(join(github.event.commits.*.message, ' '), '#skip') }}"
